@@ -12,6 +12,7 @@ public class UserService {
 	private final UserRepository repository;
 	private final PasswordEncoder encoder;
 	
+	
 	public UserService(UserRepository repository, PasswordEncoder encoder) {
 		super();
 		this.repository = repository;
@@ -40,7 +41,7 @@ public class UserService {
 		user.setPassword(encoder.encode(user.getPassword()));
 		
 		if (repository.existsByEmail(user.getEmail()))
-			throw new Exception("Já existe usuário cadastrado com este e-mail");
+			throw new Exception("Ja á existe um usuário com esse e-mail");
 		
 		repository.save(user);
 		
