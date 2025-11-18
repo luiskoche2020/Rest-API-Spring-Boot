@@ -2,6 +2,7 @@ package br.edu.atitus.api_example.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,10 +16,10 @@ public class ConfigSecurity {
 	
 	@Bean
 	SecurityFilterChain getSecurityFilter(HttpSecurity http) throws Exception{
-		http.sessionManagement(session -> session
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Desabilita seções
+		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Desabilita seções
 			.csrf(csrf -> csrf.disable()) //Desabilita proteção CSRF
 			.authorizeHttpRequests(auth -> auth
+				.requestMatchers(HttpMethod.OPTIONS).permitAll()
 				.requestMatchers("/ws**","/ws/**").authenticated()
 				.anyRequest().permitAll());
 		
